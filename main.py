@@ -2,7 +2,6 @@ import sys
 
 from couchbase.cluster import Cluster
 from couchbase.cluster import PasswordAuthenticator
-from couchbase.n1ql import N1QLQuery
 
 argLength = len(sys.argv)
 if argLength <= 1:
