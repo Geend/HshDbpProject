@@ -6,9 +6,9 @@ from couchbase.cluster import PasswordAuthenticator
 argLength = len(sys.argv)
 if argLength <= 1:
     print("Please provide Opcode")
-    print(sys.argv[0] + " 1             Query 1")
-    print(sys.argv[0] + " 2             Query 2")
-    print(sys.argv[0] + " 3             Query 3")
+    print(sys.argv[0] + " 1             Query 1 (Compute ticket number, issue date and time for all citations where the fine amount is over 350:)")
+    print(sys.argv[0] + " 2             Query 2 (Compute make and average fine amount for each car make in the database)")
+    print(sys.argv[0] + " 3             Query 3 (Compute the number of citations per day and violation code (alternatively: compute day and violation)")
     print(sys.argv[0] + " 4             Upload data (data.csv in same dir)")
 else:
     opCode = sys.argv[1]
