@@ -1,7 +1,24 @@
 import sys
+import csv
 
 from couchbase.cluster import Cluster
 from couchbase.cluster import PasswordAuthenticator
+
+
+maxInt = sys.maxsize
+
+while True:
+    # decrease the maxInt value by factor 10
+    # as long as the OverflowError occurs.
+
+    try:
+        csv.field_size_limit(maxInt)
+        break
+    except OverflowError:
+        maxInt = int(maxInt/10)
+
+
+
 
 argLength = len(sys.argv)
 if argLength <= 1:
@@ -30,6 +47,42 @@ else:
         for row in rows:
             print(row)
     elif opCode == "4":
+        counter = 0
+        with open(sys.argv[2], newline='') as csvfile:
+            spamreader = csv.reader(csvfile, delimiter=',', quotechar='|')
+            for row in spamreader:
+
+                if counter > 0:
+
+                    fa = 0
+                    if row[16].isdigit():
+                        fa = int(row[16])
+
+                    bucket.upsert(row[0], {'ticket_number': row[0],
+                                       'issue_date': row[1],
+                                       'issue_time': row[2],
+                                       'meter_id': row[3],
+                                       'marked_time': row[4],
+                                       'rp_state_plate': row[5],
+                                       'plate_expiry_date': row[6],
+                                       'vin': row[7],
+                                       'make': row[8],
+                                       'body_style': row[9],
+                                       'color': row[10],
+                                       'location': row[11],
+                                       'route': row[12],
+                                       'agency': row[13],
+                                       'violation_code': row[14],
+                                       'violation_description': row[15],
+                                       'fine_amount': fa,
+                                       'latitude': row[17],
+                                       'longitude': row[18]
+                                       })
+                counter += 1
+
+                if counter % 10000 == 0:
+                    print(counter)
+
         print("Done")
     else:
         print("Invalid OpCode")
