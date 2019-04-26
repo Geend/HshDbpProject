@@ -22,11 +22,11 @@ else:
         for row in rows:
             print(row)
     elif opCode == "2":
-        rows = bucket.n1ql_query('SELECT ticket_number FROM `proj` WHERE fine_amount > 350')
+        rows = bucket.n1ql_query('SELECT make Make, AVG(fine_amount) AvgFine FROM `proj` GROUP BY make ORDER BY AvgFine ASC')
         for row in rows:
             print(row)
     elif opCode == "3":
-        rows = bucket.n1ql_query('SELECT ticket_number FROM `proj` WHERE fine_amount > 350')
+        rows = bucket.n1ql_query('SELECT issue_date, violation_code, count(ticket_number) FROM `proj` GROUP BY issue_date, violation_code;')
         for row in rows:
             print(row)
     elif opCode == "4":
