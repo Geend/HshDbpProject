@@ -1,0 +1,18 @@
+CREATE PRIMARY INDEX primIndex ON proj;
+
+
+Compute ticket number, issue date and time for all citations where the fine amount is over 350:
+SELECT count(case when fine_amount > 350 then 1 else null end) FROM `proj`;
+SELECT ticket_number, issue_data, issue_time, fine_amount FROM `proj` WHERE fine_amount > 350;
+
+Compute make and average fine amount for each car make in the database:
+SELECT make, AVG(fine_amount) FROM `proj` GROUP BY make;
+SELECT make Make, AVG(fine_amount) AvgFine FROM `proj` GROUP BY make ORDER BY AvgFine ASC;
+
+
+Compute the number of citations per day and violation code (alternatively: compute day and violation
+code which has the highest number of citations per day and violation code):
+SELECT issue_date, violation_code, count(ticket_number) FROM `proj` GROUP BY issue_date, violation_code;
+
+
+SELECT ticket_number, make, fine_amount FROM `proj` WHERE make = "AUDI";
